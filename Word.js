@@ -5,12 +5,13 @@ let Word = class {
     constructor(wordString) {
 
         this.lettersArr = [];
-        
 
         wordString.split("").map(char => {
             let newChar = new Letter(char);
             this.lettersArr.push(newChar);
         })
+
+        this.charsArr = wordString.split("");
     }
 
     returnString() {
@@ -18,7 +19,7 @@ let Word = class {
         let wordString = [];
 
         this.lettersArr.map(char => {
-            
+
             wordString.push(char.output());
         })
 
@@ -28,7 +29,7 @@ let Word = class {
     letterGuessed(letter) {
 
         this.lettersArr.map(char => {
-            
+
             char.checkChar(letter);
         })
     }
