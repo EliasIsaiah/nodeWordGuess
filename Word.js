@@ -36,7 +36,7 @@ let Word = class {
 
     wordGuessed() {
         return this.lettersArr.every(letter => {
-            // console.log("letter is guessed", letter.isGuessed);
+
             return letter.isGuessed === true;
         })
     }
