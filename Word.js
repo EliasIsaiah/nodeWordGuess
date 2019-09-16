@@ -42,12 +42,4 @@ let Word = class {
     }
 }
 
-// let word = new Word("apple");
-// word.letterGuessed("a");
-// word.letterGuessed("q");
-// word.letterGuessed("l");
-// word.letterGuessed("e");
-// console.log(word.returnString());
-// console.log(word.wordGuessed());
-
 module.exports = Word;
