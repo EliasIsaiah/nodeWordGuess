@@ -9,8 +9,11 @@ const game = {
         "visual studio", "manchester orchestra", "camera", "string theory", "dictionary",
         "thesaurus", "infinite loop", "hamburger menu", "mouse", "keyboard", "monitor", "lizard",
         "canine", "lipid", "solid", "liquid", "gas", "sphere", "rhombus", "cone", "gelato"],
+    // wordsArr: ["a"],
 
     currentWord: "",
+
+    guessedLettersArr: [],
 
     // counter: 0,
 
@@ -20,38 +23,30 @@ const game = {
         // this.counter = 0;
         this.currentWord = "";
         this.guesses = GUESS_LIMIT;
+        this.guessedLettersArr = [];
     },
 
     gameIsOver: function () {
-        // if (this.counter > this.wordsArr.length) return true;
-        if (this.guesses < 1) return true;
-        return false;
+
+        console.log("word guessed", this.currentWord.wordGuessed());
+        return (this.guesses < 1) || this.currentWord.wordGuessed();
     },
 
     getRandomNumber: function () {
-        // this.counter--;
-        // console.log(this.counter);
-        // if (this.counter < this.wordsArr.length) {
 
         return Math.floor(Math.random() * this.wordsArr.length);
-        // } else this.gameOver();
-
-        // if (this.guesses < 1) {
-        //     this.gameOver();
-        // }
     },
 
     getRandomWord: function () {
-        // this.randomWord = this.wordsArr[Math.floor(Math.random() * this.wordsArr.length)];
+
         random = this.getRandomNumber();
-        console.log(random);
         this.currentWord = new Word(this.wordsArr[random]);
     },
 
     start: function () {
 
         if (this.currentWord === "") this.getRandomWord();
-        console.log(this.currentWord.returnString());
+        console.log("\n" + this.currentWord.returnString() + "\n");
 
         inquirer.prompt([{
             name: "guess",
@@ -59,16 +54,33 @@ const game = {
             message: "Guess a Letter"
         }]).then((response) => {
 
-            console.log(response);
+            // console.log(response);
+
+            if (!this.guessedLettersArr.includes(response.guess)) {
+                this.guessedLettersArr.push(response.guess);
+            }
+            else {
+                // console.log("bypass endgame checker");
+                this.start();
+                return;
+            }
 
             if (!this.currentWord.charsArr.includes(response.guess)) {
                 this.guesses--;
                 console.log(`Incorrect. you have ${this.guesses} guesses remaining`);
             }
+
+            // console.log("response.guess:");
+            // console.log(response.guess);
+
             this.currentWord.letterGuessed(response.guess);
+            // console.log("word is guessed: ", this.currentWord.wordGuessed());
+
             // console.log("\n" + this.currentWord.returnString());
+
             if (this.gameIsOver()) this.endGame();
             else this.start();
+            // this.start();
         })
     },
 
@@ -83,7 +95,7 @@ const game = {
             choices: ["yes", "no"]
         }]).then((response) => {
 
-            console.log(response);
+            // console.log(response);
             if (response.playAgain === "yes") this.start()
             else process.exit();
         })

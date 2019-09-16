@@ -5,13 +5,13 @@ let Word = class {
     constructor(wordString) {
 
         this.lettersArr = [];
-
         wordString.split("").map(char => {
             let newChar = new Letter(char);
             this.lettersArr.push(newChar);
         })
 
         this.charsArr = wordString.split("");
+        this.wordCompleted = "false";
     }
 
     returnString() {
@@ -33,24 +33,21 @@ let Word = class {
             char.checkChar(letter);
         })
     }
+
+    wordGuessed() {
+        return this.lettersArr.every(letter => {
+            // console.log("letter is guessed", letter.isGuessed);
+            return letter.isGuessed === true;
+        })
+    }
 }
 
+// let word = new Word("apple");
+// word.letterGuessed("a");
+// word.letterGuessed("q");
+// word.letterGuessed("l");
+// word.letterGuessed("e");
+// console.log(word.returnString());
+// console.log(word.wordGuessed());
+
 module.exports = Word;
-
-// let word1 = new Word("hotdogs");
-// let word2 = new Word("steak and cheese");
-
-// console.log(word2.returnString());
-// word2.letterGuessed("a");
-// console.log(word2.returnString());
-// word2.letterGuessed("e");
-// console.log(word2.returnString());
-// module.exports = Word;
-    // const allowedChars = /^[A-Za-z]+$/;
-
-    // if (inputtxt.value.match(allowedChars)) {
-
-    //     let newChar = new Lettter(char)
-    //     this.lettersArr.push()
-    // }
-    // else return "Please enter an alphabet character"
